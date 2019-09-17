@@ -29,7 +29,16 @@ suite('Functional Tests', function() {
         })
         .end(function(err, res){
           assert.equal(res.status, 200);
-          
+          assert.equal(res.issue_title, 'Title');
+          assert.equal(res.issue_text, 'text');
+          assert.equal(res.created_by, 'Functional Test - Every field filled in');
+          assert.equal(res.assigned_to, 'Chai and Mocha');
+          assert.equal(res.status_text, 'In QA');
+          /*TO DO Write test for created_on and opened_on using... approximately +/- 5mins, or chai-datetime plugin
+          */
+          assert.isTrue(res.open);
+          assert.exists(res._id);
+
           //fill me in too!
           
           done();
