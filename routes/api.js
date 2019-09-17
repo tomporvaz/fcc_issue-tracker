@@ -16,6 +16,11 @@ const CONNECTION_STRING = process.env.DB; //MongoClient.connect(CONNECTION_STRIN
 
 module.exports = function (app) {
 
+  MongoClient.connect(CONNECTION_STRING, function(err, db) {
+    if(err){console.error(`DB failed because.... ${err}`)}
+    else {console.log(`DB sucess!!!!!`)};
+  });
+
   app.route('/api/issues/:project')
   
     .get(function (req, res){
