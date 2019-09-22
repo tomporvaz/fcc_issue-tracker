@@ -10,6 +10,7 @@ var chaiHttp = require('chai-http');
 var chai = require('chai');
 var assert = chai.assert;
 var server = require('../server');
+const today = new Date();
 
 chai.use(chaiHttp);
 
@@ -34,8 +35,16 @@ suite('Functional Tests', function() {
           assert.equal(res.created_by, 'Functional Test - Every field filled in');
           assert.equal(res.assigned_to, 'Chai and Mocha');
           assert.equal(res.status_text, 'In QA');
-          /*TO DO Write test for created_on and opened_on using... approximately +/- 5mins, or chai-datetime plugin
+          /*
+          TO DO Write test for created_on and opened_on using... 
+          approximately +/- 2mins (120000ms), 
+          or chai-datetime plugin
           */
+         console.log(today);
+         assert.approximately(res.created_on, today, 120000);
+         assert.approximately(res.updated_on, today, 120000)
+
+
           assert.isTrue(res.open);
           assert.exists(res._id);
 
