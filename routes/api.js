@@ -70,7 +70,16 @@ db.once('open', function (){
         if(err){
           console.error(`Error saving issue: ${err}`);
         } else {
-          return res.json(issueObj);
+          return res.json({
+            _id: issueObj._id,
+            issue_title: issueObj.issue_title,
+            issue_text: issueObj.issue_text,
+            created_on: issueObj.created_on,
+            updated_on: issueObj.updated_on,
+            created_by: issueObj.created_by,
+            assigned_to: issueObj.assigned_to,
+            status_text: issueObj.status_text
+          });
         }
       })
       
