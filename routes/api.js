@@ -24,6 +24,12 @@ let db = mongoose.connection;
 db.on("error", console.error.bind(console, 'connection error'));
 db.once('open', function (){
   console.log("DB sucess using mongoose!")
+});
+/*   MongoClient.connect(CONNECTION_STRING, function(err, db) {
+    if(err){console.error(`DB failed because.... ${err}`)}
+    else {console.log(`DB sucess!!!!!`)};
+  }); */
+
 
   //issue schema and model
   const issueSchema = new Schema({
@@ -38,12 +44,6 @@ db.once('open', function (){
   })
 
   const Issue = mongoose.model('Issue', issueSchema);
-
-});
-/*   MongoClient.connect(CONNECTION_STRING, function(err, db) {
-    if(err){console.error(`DB failed because.... ${err}`)}
-    else {console.log(`DB sucess!!!!!`)};
-  }); */
 
   app.route('/api/issues/:project')
   
