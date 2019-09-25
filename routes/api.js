@@ -69,11 +69,11 @@ module.exports = function (app) {
     })
     
     //handle optional input if they are not empty
-    if(typeof req.body.assigned_to === string){
+    if(typeof req.body.assigned_to === 'string'){
       issue.assigned_to = req.body.assigned_to
     }
     
-    if(typeof req.body.status_text === string){
+    if(typeof req.body.status_text === 'string'){
       issue.status_text = req.body.status_text
     }
     
