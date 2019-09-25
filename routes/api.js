@@ -80,7 +80,8 @@ module.exports = function (app) {
           updated_on: issueObj.updated_on,
           created_by: issueObj.created_by,
           assigned_to: issueObj.assigned_to,
-          status_text: issueObj.status_text
+          status_text: issueObj.status_text,
+          open: issueObj.open
         });
       }
     })

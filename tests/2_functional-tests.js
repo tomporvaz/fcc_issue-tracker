@@ -46,7 +46,7 @@ suite('Functional Tests', function() {
        assert.approximately(updated_on_date.getTime(), today.getTime(), 120000, "updated_on isn't within 2 mins of submission");
 
         assert.isTrue(res.body.open, "open is not true");
-        assert.exists(res.body._id, "doesn't have an _id");
+        assert.isOk(res.body._id, "doesn't have an _id");
         
         //fill me in too!
         
