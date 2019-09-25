@@ -30,22 +30,23 @@ suite('Functional Tests', function() {
       })
       .end(function(err, res){
         assert.equal(res.status, 200, "response is not 200");
-        assert.equal(res.issue_title, 'Title', "Title is not Title");
-        assert.equal(res.issue_text, 'text', "text is not text");
-        assert.equal(res.created_by, 'Functional Test - Every field filled in', "created_by doesn't match");
-        assert.equal(res.assigned_to, 'Chai and Mocha', "assigned_to doesn't match");
-        assert.equal(res.status_text, 'In QA', "status_text doesn't match");
+        assert.equal(res.body.issue_title, 'Title', "Title is not Title");
+        assert.equal(res.body.issue_text, 'text', "text is not text");
+        assert.equal(res.body.created_by, 'Functional Test - Every field filled in', "created_by doesn't match");
+        assert.equal(res.body.assigned_to, 'Chai and Mocha', "assigned_to doesn't match");
+        assert.equal(res.body.status_text, 'In QA', "status_text doesn't match");
         /*
         Tests for created_on and updated_on using... 
         approximately +/- 2mins (120000ms), 
         or chai-datetime plugin
         */
-        console.log(today);
-        assert.approximately(res.created_on, today, 120000, "created_on is not within 2mins of submission");
-        assert.approximately(res.updated_on, today, 120000, "updated_on isn't within 2 mins of submission");
+       const created_on_date = new Date(res.body.created_on);
+       assert.approximately(created_on_date.getTime(), today.getTime(), 120000, "created_on is not within 2mins of submission");
+       const updated_on_date = new Date(res.body.updated_on); 
+       assert.approximately(updated_on_date.getTime(), today.getTime(), 120000, "updated_on isn't within 2 mins of submission");
 
-        assert.isTrue(res.open, "open is not true");
-        assert.exists(res._id, "doesn't have an _id");
+        assert.isTrue(res.body.open, "open is not true");
+        assert.exists(res.body._id, "doesn't have an _id");
         
         //fill me in too!
         

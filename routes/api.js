@@ -60,10 +60,11 @@ db.once('open', function (){
         issue_title: req.body.issue_title,
         issue_text: req.body.issue_text,
         created_on: now,
-        updated_on: null,
+        updated_on: now,
         created_by: req.body.created_by,
         assigned_to: req.body.assigned_to,
         status_text: req.body.status_text
+        //add open boolean
       })
 
       issue.save(function(err, issueObj){
