@@ -79,6 +79,7 @@ suite('Functional Tests', function() {
         assert.isTrue(res.body.open, "open is not true");
         assert.isOk(res.body._id, "doesn't have an _id");
         
+        done();
       });
     });
     
@@ -94,6 +95,7 @@ suite('Functional Tests', function() {
         assert.notEqual(res.status, 200, "response is not 200");
         assert.isNotOk(res.body._id, "doesn't have an _id");
         
+        done();
       });
       
     });
