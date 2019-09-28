@@ -77,11 +77,12 @@ module.exports = function (app) {
       issue.status_text = req.body.status_text
     }
     
-    if (typeof req.body.issue_title !== 'string'
-    || typeof req.body.issue_text !== 'string'
-    || typeof req.body.created_by !== 'string'){
-      res.send('missing inputs')
-    }
+    if (!req.body.issue_title
+      || !req.body.issue_text
+      || !req.body.created_by){
+        console.log("Should return 'missing inputs'")
+        return res.send('missing inputs').end();
+      };
     
     issue.save(function(err, issueObj){s
       if(err){
