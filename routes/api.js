@@ -84,7 +84,7 @@ module.exports = function (app) {
         return res.send('missing inputs').end();
       };
     
-    issue.save(function(err, issueObj){s
+    issue.save(function(err, issueObj){
       if(err){
         console.error(`Error saving issue: ${err}`);
       } else {
