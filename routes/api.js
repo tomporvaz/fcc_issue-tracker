@@ -51,7 +51,9 @@ module.exports = function (app) {
   .get(function (req, res){
     var project = req.params.project;
 
-    Issue.find({projectname: project}, function(err, issues){
+    console.log(req.query);
+
+    Issue.find({projectname: project, issue_title: req.query.issue_title, created_by: req.query.created_by}, function(err, issues){
       if(err){
         return(console.error(`Error in mongoose find query: ${err}`))
       } else {
