@@ -58,10 +58,18 @@ module.exports = function (app) {
     }
 
     if(req.query.issue_title){filterObj.issue_title = req.query.issue_title};
+    if(req.query.issue_text){filterObj.issue_text = req.query.issue_text};
+    if(req.query.created_on){filterObj.created_on = req.query.created_on};
+    if(req.query.updated_on){filterObj.updated_on = req.query.updated_on};
     if(req.query.created_by){filterObj.created_by = req.query.created_by};
+    if(req.query.assigned_to){filterObj.assigned_to = req.query.assigned_to};
+    if(req.query.status_text){filterObj.status_text = req.query.status_text};
+    if(req.query.open){filterObj.open = req.query.open};
 
 
-    Issue.find({filterObj}, function(err, issues){
+    console.log(filterObj);
+
+    Issue.find(filterObj, function(err, issues){
       if(err){
         return(console.error(`Error in mongoose find query: ${err}`))
       } else {
