@@ -53,11 +53,15 @@ module.exports = function (app) {
 
     console.log(req.query);
 
-    Issue.find(
-      {projectname: project
-        (req.query.issue_title ? ', issue_title: req.query.issue_title' : '')
-        (req.query.created_by ? ', created_by: req.query.created_by' : '')
-        }, function(err, issues){
+    const filterObj = {
+      projectname: project
+    }
+
+    if(req.query.issue_title){filterObj.issue_title = req.query.issue_title};
+    if(req.query.created_by){filterObj.created_by = req.query.created_by};
+
+
+    Issue.find({filterObj}, function(err, issues){
       if(err){
         return(console.error(`Error in mongoose find query: ${err}`))
       } else {
