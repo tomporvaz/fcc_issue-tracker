@@ -25,11 +25,6 @@ module.exports = function (app) {
   db.once('open', function (){
     console.log("DB sucess using mongoose!")
   });
-  /*   MongoClient.connect(CONNECTION_STRING, function(err, db) {
-    if(err){console.error(`DB failed because.... ${err}`)}
-    else {console.log(`DB sucess!!!!!`)};
-  }); */
-  
   
   //issue schema and model
   const issueSchema = new Schema({
@@ -45,14 +40,14 @@ module.exports = function (app) {
   })
   
   const Issue = mongoose.model('Issue', issueSchema);
+
   
   app.route('/api/issues/:project')
   
   .get(function (req, res){
     var project = req.params.project;
 
-    console.log(req.query);
-
+    //Create filterObj from project name and url query properties if they exist.
     const filterObj = {
       projectname: project
     }
@@ -66,9 +61,7 @@ module.exports = function (app) {
     if(req.query.status_text){filterObj.status_text = req.query.status_text};
     if(req.query.open){filterObj.open = req.query.open};
 
-
-    console.log(filterObj);
-
+    //search DB for issues using the filter object built from the url query.
     Issue.find(filterObj, function(err, issues){
       if(err){
         return(console.error(`Error in mongoose find query: ${err}`))
@@ -106,7 +99,6 @@ module.exports = function (app) {
     if (!req.body.issue_title
       || !req.body.issue_text
       || !req.body.created_by){
-        console.log("Should return 'missing inputs'")
         return res.send('missing inputs').end();
       };
     

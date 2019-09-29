@@ -103,20 +103,70 @@ suite('Functional Tests', function() {
   
   suite('PUT /api/issues/{project} => text', function() {
     
-    test('No body', function(done) {
-      
-      assert.fail();
+    //send a post and retain _id at test suite block level for use in PUT tests
+    let putTestId = undefined;
+    chai.request(server)
+    .post('/api/issues/test')
+    .send({
+      issue_title: 'Title',
+      issue_text: 'text',
+      created_by: 'Functional Test - Every field filled in',
+      assigned_to: 'Chai and Mocha',
+      status_text: 'In QA'
+    })
+    .end(function(err, res){
+      putTestId = res.body._id;        
       done();
+    });
+    
+    test('No body', function(done) {
+      chai.request(server)
+      .put('/api/issues/test')
+      .send({
+      })
+      .end(function(err, res){
+        if(err){console.error(err)};
+
+        assert.equal(res.status, 200, "response is not 200");
+        assert.equal(res.body, 'no updated field sent');
+
+        done();
+      });
     });
     
     test('One field to update', function(done) {
-      assert.fail();
-      done(); 
+      chai.request(server)
+      .put('/api/issues/test')
+      .send({
+        _id: putTestId,
+       assigned_to: 'Billy Bob'
+      })
+      .end(function(err, res){
+        if(err){console.error(err)};
+
+        assert.equal(res.status, 200, "response is not 200");
+        assert.equal(res.body, `successfully updated ${putTestId}`);
+
+        done();
+      });
     });
     
     test('Multiple fields to update', function(done) {
-      assert.fail();
-      done();
+      chai.request(server)
+      .put('/api/issues/test')
+      .send({
+        _id: putTestId,
+       assigned_to: 'Billy Bob',
+       status_text: 'Mash fermenting'
+      })
+      .end(function(err, res){
+        if(err){console.error(err)};
+
+        assert.equal(res.status, 200, "response is not 200");
+        assert.equal(res.body, `successfully updated ${putTestId}`);
+
+        done();
+      });
     });
     
   });
