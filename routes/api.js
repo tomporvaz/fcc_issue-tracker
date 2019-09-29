@@ -40,18 +40,18 @@ module.exports = function (app) {
   })
   
   const Issue = mongoose.model('Issue', issueSchema);
-
+  
   
   app.route('/api/issues/:project')
   
   .get(function (req, res){
     var project = req.params.project;
-
+    
     //Create filterObj from project name and url query properties if they exist.
     const filterObj = {
       projectname: project
     }
-
+    
     if(req.query.issue_title){filterObj.issue_title = req.query.issue_title};
     if(req.query.issue_text){filterObj.issue_text = req.query.issue_text};
     if(req.query.created_on){filterObj.created_on = req.query.created_on};
@@ -60,7 +60,7 @@ module.exports = function (app) {
     if(req.query.assigned_to){filterObj.assigned_to = req.query.assigned_to};
     if(req.query.status_text){filterObj.status_text = req.query.status_text};
     if(req.query.open){filterObj.open = req.query.open};
-
+    
     //search DB for issues using the filter object built from the url query.
     Issue.find(filterObj, function(err, issues){
       if(err){
@@ -101,35 +101,57 @@ module.exports = function (app) {
       || !req.body.created_by){
         return res.send('missing inputs').end();
       };
-    
-    issue.save(function(err, issueObj){
-      if(err){
-        console.error(`Error saving issue: ${err}`);
-      } else {
-        return res.json({
-          _id: issueObj._id,
-          issue_title: issueObj.issue_title,
-          issue_text: issueObj.issue_text,
-          created_on: issueObj.created_on,
-          updated_on: issueObj.updated_on,
-          created_by: issueObj.created_by,
-          assigned_to: issueObj.assigned_to,
-          status_text: issueObj.status_text,
-          open: issueObj.open
-        });
-      }
+      
+      issue.save(function(err, issueObj){
+        if(err){
+          console.error(`Error saving issue: ${err}`);
+        } else {
+          return res.json({
+            _id: issueObj._id,
+            issue_title: issueObj.issue_title,
+            issue_text: issueObj.issue_text,
+            created_on: issueObj.created_on,
+            updated_on: issueObj.updated_on,
+            created_by: issueObj.created_by,
+            assigned_to: issueObj.assigned_to,
+            status_text: issueObj.status_text,
+            open: issueObj.open
+          });
+        }
+      })
+      
     })
     
-  })
-  
-  .put(function (req, res){
-    var project = req.params.project;
+    .put(function (req, res){
+
+      //create update object to pass to findAndUpdate method, adding only properties present from client
+      let updateObj ={}
+
+      if(req.body.issue_title){updateObj.issue_title = req.body.issue_title};
+      if(req.body.issue_text){updateObj.issue_text = req.body.issue_text};
+      if(req.body.created_on){updateObj.created_on = req.body.created_on};
+      if(req.body.updated_on){updateObj.updated_on = req.body.updated_on};
+      if(req.body.created_by){updateObj.created_by = req.body.created_by};
+      if(req.body.assigned_to){updateObj.assigned_to = req.body.assigned_to};
+      if(req.body.status_text){updateObj.status_text = req.body.status_text};
+      if(req.body.open){updateObj.open = req.body.open};
+      
+      //findOne and update
+      Issue.findByIdAndUpdate(req.body._id, updateObj, function(err, doc){
+        if(err){
+          res.send(`could not update ${req.body._id} because error: ${err}`);
+        } else {
+          res.send(`successfully updated ${doc._id}`);
+        }
+      })
+      
+      
+    })
     
-  })
-  
-  .delete(function (req, res){
-    var project = req.params.project;
+    .delete(function (req, res){
+      var project = req.params.project;
+      
+    });
     
-  });
+  };
   
-};
