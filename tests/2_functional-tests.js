@@ -105,18 +105,20 @@ suite('Functional Tests', function() {
     
     //send a post and retain _id at test suite block level for use in PUT tests
     let putTestId = undefined;
-    chai.request(server)
-    .post('/api/issues/test')
-    .send({
-      issue_title: 'Title',
-      issue_text: 'text',
-      created_by: 'Functional Test - Every field filled in',
-      assigned_to: 'Chai and Mocha',
-      status_text: 'In QA'
-    })
-    .end(function(err, res){
-      putTestId = res.body._id;        
-      done();
+    test('setup puts', function(done) {
+      chai.request(server)
+      .post('/api/issues/test')
+      .send({
+        issue_title: 'Title',
+        issue_text: 'text',
+        created_by: 'Functional Test - Every field filled in',
+        assigned_to: 'Chai and Mocha',
+        status_text: 'In QA'
+      })
+      .end(function(err, res){
+        putTestId = res.body._id;        
+        done();
+      });
     });
     
     test('No body', function(done) {
@@ -126,10 +128,10 @@ suite('Functional Tests', function() {
       })
       .end(function(err, res){
         if(err){console.error(err)};
-
+        
         assert.equal(res.status, 200, "response is not 200");
         assert.equal(res.body, 'no updated field sent');
-
+        
         done();
       });
     });
@@ -139,14 +141,14 @@ suite('Functional Tests', function() {
       .put('/api/issues/test')
       .send({
         _id: putTestId,
-       assigned_to: 'Billy Bob'
+        assigned_to: 'Billy Bob'
       })
       .end(function(err, res){
         if(err){console.error(err)};
-
+        
         assert.equal(res.status, 200, "response is not 200");
         assert.equal(res.body, `successfully updated ${putTestId}`);
-
+        
         done();
       });
     });
@@ -156,15 +158,15 @@ suite('Functional Tests', function() {
       .put('/api/issues/test')
       .send({
         _id: putTestId,
-       assigned_to: 'Billy Bob',
-       status_text: 'Mash fermenting'
+        assigned_to: 'Billy Bob',
+        status_text: 'Mash fermenting'
       })
       .end(function(err, res){
         if(err){console.error(err)};
-
+        
         assert.equal(res.status, 200, "response is not 200");
         assert.equal(res.body, `successfully updated ${putTestId}`);
-
+        
         done();
       });
     });

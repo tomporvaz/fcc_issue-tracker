@@ -144,8 +144,6 @@ module.exports = function (app) {
           res.send(`successfully updated ${doc._id}`);
         }
       })
-      
-      
     })
     
     .delete(function (req, res){
