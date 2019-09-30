@@ -137,6 +137,11 @@ module.exports = function (app) {
       if(req.body.assigned_to){updateObj.assigned_to = req.body.assigned_to};
       if(req.body.status_text){updateObj.status_text = req.body.status_text};
       if(req.body.open){updateObj.open = req.body.open};
+
+      //short circuit response if no body sent
+      if(Object.keys(updateObj).length < 2){
+        res.send('no updated field sent');
+      }
       
       //findOne and update
       Issue.findByIdAndUpdate(req.body._id, updateObj, function(err, doc){
