@@ -15,6 +15,7 @@ const today = new Date();
 chai.use(chaiHttp);
 
 suite('Functional Tests', function() {
+  let putTestId = '';
   
   suite('POST /api/issues/{project} => object with issue data', function() {
     
@@ -29,6 +30,7 @@ suite('Functional Tests', function() {
         status_text: 'In QA'
       })
       .end(function(err, res){
+        putTestId = res.body._id;
         assert.equal(res.status, 200, "response is not 200");
         assert.equal(res.body.issue_title, 'Title', "Title is not Title");
         assert.equal(res.body.issue_text, 'text', "text is not text");
@@ -104,7 +106,7 @@ suite('Functional Tests', function() {
   suite('PUT /api/issues/{project} => text', function() {
     
     //send a post and retain _id at test suite block level for use in PUT tests
-    let putTestId = '5d913e7b0f97ca0b46785642';
+    
     /*test('setup puts', function(done) {
       chai.request(server)
       .post('/api/issues/test')
@@ -245,11 +247,34 @@ suite('Functional Tests', function() {
   suite('DELETE /api/issues/{project} => text', function() {
     
     test('No _id', function(done) {
-      
+      chai.request(server)
+      .delete('/api/issues/test')
+      .send({
+      })
+      .end(function(err, res){
+        if(err){console.error(err)};
+        
+        assert.equal(res.status, 200, "response is not 200");
+        assert.equal(res.text, '_id error');
+        
+        done();
+      });
     });
     
     test('Valid _id', function(done) {
-      
+      chai.request(server)
+      .delete('/api/issues/test')
+      .send({
+        _id: putTestId
+      })
+      .end(function(err, res){
+        if(err){console.error(err)};
+        
+        assert.equal(res.status, 200, "response is not 200");
+        assert.equal(res.text, `deleted ${putTestId}`);
+        
+        done();
+      });
     });
     
   });
