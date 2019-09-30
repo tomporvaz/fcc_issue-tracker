@@ -15,6 +15,7 @@ var ObjectId = require('mongodb').ObjectID;
 const CONNECTION_STRING = process.env.DB; //MongoClient.connect(CONNECTION_STRING, function(err, db) {});
 
 const mongoose = require('mongoose')
+mongoose.set('useFindAndModify', false);
 
 module.exports = function (app) {
   const Schema = mongoose.Schema;
@@ -125,12 +126,13 @@ module.exports = function (app) {
     .put(function (req, res){
 
       //create update object to pass to findAndUpdate method, adding only properties present from client
-      let updateObj ={}
+      let updateObj ={
+        updated_on = new Date()
+      }
 
       if(req.body.issue_title){updateObj.issue_title = req.body.issue_title};
       if(req.body.issue_text){updateObj.issue_text = req.body.issue_text};
       if(req.body.created_on){updateObj.created_on = req.body.created_on};
-      if(req.body.updated_on){updateObj.updated_on = req.body.updated_on};
       if(req.body.created_by){updateObj.created_by = req.body.created_by};
       if(req.body.assigned_to){updateObj.assigned_to = req.body.assigned_to};
       if(req.body.status_text){updateObj.status_text = req.body.status_text};
@@ -139,9 +141,9 @@ module.exports = function (app) {
       //findOne and update
       Issue.findByIdAndUpdate(req.body._id, updateObj, function(err, doc){
         if(err){
-          res.send(`could not update ${req.body._id} because error: ${err}`);
+          res.send(`could not update ${req.body._id}`);
         } else {
-          res.send(`successfully updated ${doc._id}`);
+          res.send(`successfully updated`);
         }
       })
     })
