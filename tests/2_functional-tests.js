@@ -104,7 +104,7 @@ suite('Functional Tests', function() {
   suite('PUT /api/issues/{project} => text', function() {
     
     //send a post and retain _id at test suite block level for use in PUT tests
-    let putTestId = 5d913e7b0f97ca0b46785642;
+    let putTestId = '5d913e7b0f97ca0b46785642';
     /*test('setup puts', function(done) {
       chai.request(server)
       .post('/api/issues/test')
@@ -131,7 +131,7 @@ suite('Functional Tests', function() {
         if(err){console.error(err)};
         
         assert.equal(res.status, 200, "response is not 200");
-        assert.equal(res.body, 'no updated field sent');
+        assert.equal(res.text, 'no updated field sent');
         
         done();
       });
@@ -148,7 +148,7 @@ suite('Functional Tests', function() {
         if(err){console.error(err)};
         
         assert.equal(res.status, 200, "response is not 200");
-        assert.equal(res.body, `successfully updated`);
+        assert.equal(res.text, `successfully updated`);
         
         done();
       });
@@ -166,7 +166,7 @@ suite('Functional Tests', function() {
         if(err){console.error(err)};
         
         assert.equal(res.status, 200, "response is not 200");
-        assert.equal(res.body, `successfully updated`);
+        assert.equal(res.text, `successfully updated`);
         
         done();
       });
