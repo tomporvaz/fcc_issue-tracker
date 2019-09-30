@@ -53,6 +53,7 @@ module.exports = function (app) {
       projectname: project
     }
     
+    if(req.query._id){filterObj._id = req.query._id};
     if(req.query.issue_title){filterObj.issue_title = req.query.issue_title};
     if(req.query.issue_text){filterObj.issue_text = req.query.issue_text};
     if(req.query.created_on){filterObj.created_on = req.query.created_on};
