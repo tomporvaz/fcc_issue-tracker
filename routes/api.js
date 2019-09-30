@@ -127,7 +127,7 @@ module.exports = function (app) {
 
       //create update object to pass to findAndUpdate method, adding only properties present from client
       let updateObj ={
-        updated_on = new Date()
+        updated_on: new Date()
       }
 
       if(req.body.issue_title){updateObj.issue_title = req.body.issue_title};
