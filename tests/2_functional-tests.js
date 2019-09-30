@@ -15,7 +15,7 @@ const today = new Date();
 chai.use(chaiHttp);
 
 suite('Functional Tests', function() {
-  let putTestId = '';
+  let test_id = '';
   
   suite('POST /api/issues/{project} => object with issue data', function() {
     
@@ -30,7 +30,7 @@ suite('Functional Tests', function() {
         status_text: 'In QA'
       })
       .end(function(err, res){
-        putTestId = res.body._id;
+        test_id = res.body._id;
         assert.equal(res.status, 200, "response is not 200");
         assert.equal(res.body.issue_title, 'Title', "Title is not Title");
         assert.equal(res.body.issue_text, 'text', "text is not text");
@@ -143,7 +143,7 @@ suite('Functional Tests', function() {
       chai.request(server)
       .put('/api/issues/test')
       .send({
-        _id: putTestId,
+        _id: test_id,
         assigned_to: 'Billy Bob'
       })
       .end(function(err, res){
@@ -160,7 +160,7 @@ suite('Functional Tests', function() {
       chai.request(server)
       .put('/api/issues/test')
       .send({
-        _id: putTestId,
+        _id: test_id,
         assigned_to: 'Billy Bob',
         status_text: 'Mash fermenting'
       })
@@ -265,13 +265,13 @@ suite('Functional Tests', function() {
       chai.request(server)
       .delete('/api/issues/test')
       .send({
-        _id: putTestId
+        _id: test_id
       })
       .end(function(err, res){
         if(err){console.error(err)};
         
         assert.equal(res.status, 200, "response is not 200");
-        assert.equal(res.text, `deleted ${putTestId}`);
+        assert.equal(res.text, `deleted ${test_id}`);
         
         done();
       });
