@@ -161,7 +161,9 @@ module.exports = function (app) {
       console.log(req.body);
 
       //return if no id sent
-      if(req.body === {})
+      if(req.body._id === undefined){
+        res.send('_id error')
+      };
 
       //find and remove in order to delete issue
       Issue.findByIdAndRemove(req.body._id, function(err, doc){
