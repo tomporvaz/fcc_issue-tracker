@@ -31,6 +31,17 @@ suite('Functional Tests', function() {
       })
       .end(function(err, res){
         test_id = res.body._id;
+
+        assert.property(res.body, '_id');
+        assert.property(res.body, 'issue_title');
+        assert.property(res.body, 'issue_text');
+        assert.property(res.body, 'created_by');
+        assert.property(res.body, 'assigned_to');
+        assert.property(res.body, 'status_text');
+        assert.property(res.body, 'created_on_date');
+        assert.property(res.body, 'updated_on_date');
+        assert.property(res.body, 'open');
+
         assert.equal(res.status, 200, "response is not 200");
         assert.equal(res.body.issue_title, 'Title', "Title is not Title");
         assert.equal(res.body.issue_text, 'text', "text is not text");
@@ -65,6 +76,17 @@ suite('Functional Tests', function() {
         created_by: 'Functional Test - Every field filled in'
       })
       .end(function(err, res){
+
+        assert.property(res.body, '_id');
+        assert.property(res.body, 'issue_title');
+        assert.property(res.body, 'issue_text');
+        assert.property(res.body, 'created_by');
+        assert.property(res.body, 'assigned_to');
+        assert.property(res.body, 'status_text');
+        assert.property(res.body, 'created_on_date');
+        assert.property(res.body, 'updated_on_date');
+        assert.property(res.body, 'open');
+
         assert.equal(res.status, 200, "response is not 200");
         assert.equal(res.body.issue_title, 'Title', "Title is not Title");
         assert.equal(res.body.issue_text, 'text', "text is not text");
