@@ -83,8 +83,8 @@ suite('Functional Tests', function() {
         assert.property(res.body, 'created_by');
         assert.property(res.body, 'assigned_to');
         assert.property(res.body, 'status_text');
-        assert.property(res.body, 'created_on_date');
-        assert.property(res.body, 'updated_on_date');
+        assert.property(res.body, 'created_on');
+        assert.property(res.body, 'updated_on');
         assert.property(res.body, 'open');
 
         assert.equal(res.status, 200, "response is not 200");
