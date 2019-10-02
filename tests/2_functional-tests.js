@@ -116,6 +116,7 @@ suite('Functional Tests', function() {
         created_by: 'Functional Test - Every field filled in'
       })
       .end(function(err, res){
+        assert.equal(res.status, 200, "response is not 200");
         assert.isNotOk(res.body._id, "doesn't have an _id");
         
         done();
