@@ -140,7 +140,7 @@ module.exports = function (app) {
       if(req.body.open){updateObj.open = req.body.open};
 
       //short circuit response if no body sent
-      if(Object.keys(updateObj).length < 1){
+      if(Object.keys(updateObj).length < 2){
         res.send('no updated field sent');
       }
       
