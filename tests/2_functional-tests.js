@@ -117,6 +117,7 @@ suite('Functional Tests', function() {
       })
       .end(function(err, res){
         assert.equal(res.status, 200, "response is not 200");
+        assert.equal(res.text, 'missing inputs');
         assert.isNotOk(res.body._id, "doesn't have an _id");
         
         done();
